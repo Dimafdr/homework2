@@ -61,3 +61,43 @@ def get_shop_list_by_dishes(dishes, persons=int):
 
 
 get_shop_list_by_dishes(['Запеченный картофель', 'Омлет'], 2)
+
+
+list_of_files = ['1.txt', '2.txt', '3.txt']
+
+print()
+print('Задание №3')
+
+def documents_reader(list_of_files) -> dict:
+  content = {}
+  name_f = {}
+  for values in list_of_files:
+    with open(values) as file:
+      list_of_sting = []
+      for line in file:
+        list_of_sting.append(line.strip())
+    name_f[len(list_of_sting)] = values
+    content[len(list_of_sting)] = list_of_sting
+  return [content, name_f]
+
+new_file = '123.txt'
+list_d = documents_reader(list_of_files)
+
+def documents_writer(new_file, list_d):
+    sort_content = {}
+    content = list_d[0]
+    name_f = list_d[1]
+    with open(new_file, "w+") as file:
+        sorted_keys = sorted(content, key=content.get)
+        sorted_keys.reverse()
+        for values in sorted_keys:
+            sort_content[values] = content[values]
+        for keys, items in sort_content.items():
+            for key_name, value_name in name_f.items():
+                if key_name == keys:
+                    file.write(f'Название файла: {value_name} \n')
+            file.write(f'Количество строк: {str(keys)} \n')
+            for sttri in items:
+                file.write(f'{sttri} \n')
+            file.write('\n')
+print(documents_writer(new_file, list_d))
